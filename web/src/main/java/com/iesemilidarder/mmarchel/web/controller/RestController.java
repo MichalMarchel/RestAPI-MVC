@@ -1,28 +1,43 @@
 package com.iesemilidarder.mmarchel.web.controller;
 
-import com.iesemilidarder.mmarchel.core.DataHelper;
 import com.iesemilidarder.mmarchel.core.data.Flights;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.iesemilidarder.mmarchel.web.service.Service;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
 
-    // All Products
-
-    @GetMapping(value = "/all")
-    public List<Flights> getAll(){
-        return DataHelper.getAll();
+    // Ver todos los vuelos
+    @GetMapping("/flights")
+    public List<Flights> getAllFlights(){
+        return Service.getAllFlights();
     }
 
-    @GetMapping(value = "/get/{id}")
-    public List<Flights> getId(@PathVariable("id") String id){
-        return DataHelper.getId(id);
+    // Ver vuelo por id
+    @GetMapping ("/flight/{id}")
+    public Flights getFlights(@PathVariable String id){
+        return Service.getFlightsById(id);
     }
 
+    // Añadir vuelo
+    @PostMapping("/flight")
+    public void addFlight(@RequestBody Flights flight){
+        Service.addFlights(flight);
+    }
+
+    //Actualizar vuelo
+    @PutMapping("/flight/{id}")
+    public void updateProduct(@RequestBody Flights flights, @PathVariable String id){
+        Service.updateFlights(flights, id);
+    }
+
+    //Borrar vuelo
+    @DeleteMapping("/flight/{id}")
+    public void deleteFlights(@PathVariable String id){
+        Service.deleteFlights(id);
+    }
 
 
 }
